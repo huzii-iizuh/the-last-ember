@@ -1,0 +1,353 @@
+==============================================================
+  THE LAST EMBER  -  THE EASY GUIDE
+  "Even the smallest light can change the dark."
+==============================================================
+
+This file explains the whole game in simple words: what it is,
+how to play it, how to share it, what it is made of, and how
+all the pieces fit together.
+
+
+--------------------------------------------------------------
+1. WHAT IS THIS GAME?
+--------------------------------------------------------------
+
+The Last Ember is a short puzzle-platform game.
+
+You are a tiny living flame - the last fire left in a world
+that went dark. You travel left to right through ruins at night
+to reach an old lighthouse and light it again.
+
+The world is 3D, but you move like a 2D game: left, right and
+jump. This style is called "2.5D".
+
+The game has 3 big ideas:
+
+  FIRE    - you ARE the fire. Your glow lights up the dark.
+  SHADOW  - some stone paths are hidden in the dark. When your
+            light gets close, they appear and you can stand on
+            them. Violet shadow thorns hurt you.
+  TIME    - your special power, the "Time Pulse", freezes moving
+            dangers for a few seconds so you can get past.
+
+The level has 4 parts:
+  1. The Awakening ...... learn to move and jump
+  2. The Hidden Path .... your light reveals hidden stones
+  3. The Frozen Passage . freeze a spinning blade and a crusher
+  4. The Lighthouse ..... everything together, then the ending
+
+At the end, the lighthouse lights up, its beams sweep the sky,
+and every street lamp in the world turns back on, one by one.
+
+
+--------------------------------------------------------------
+2. HOW TO PLAY
+--------------------------------------------------------------
+
+Start the game:
+  - Double-click  build\TheLastEmber.exe
+  - Click PLAY.
+
+Keys:
+  Move left / right ... A and D (or the arrow keys)
+  Jump ................ Space (or W, or Up arrow)
+  Time Pulse .......... Q (or right mouse button)
+  Back to last shrine . R
+  Pause ............... Esc
+
+Tips:
+  - Blue-marked things can be frozen with the Time Pulse.
+  - The Time Pulse lasts 2.5 seconds, then needs 3 seconds to
+    recharge. The bar in the bottom-left shows when it is ready.
+  - Little floating sparks show where a hidden stone is.
+  - Fire shrines are checkpoints. If you fall, you come back to
+    the last shrine you lit.
+
+
+--------------------------------------------------------------
+3. HOW TO SHARE THE GAME WITH A FRIEND
+--------------------------------------------------------------
+
+The whole game is ONE file: build\TheLastEmber.exe (about 105 MB).
+Your friend does NOT need to install anything else.
+
+  Step 1. Right-click TheLastEmber.exe -> Send to ->
+          Compressed (zipped) folder.
+  Step 2. Upload the zip to Google Drive, OneDrive or
+          WeTransfer, and send your friend the link.
+  Step 3. Tell your friend: when Windows says
+          "Windows protected your PC", click
+          "More info" then "Run anyway".
+          (The game is not "signed", which costs money.
+          It is safe.)
+  Step 4. The first start can take up to a minute.
+
+It is also on GitHub: download it from the "Releases" page of
+the the-last-ember repository.
+
+What your friend's PC needs:
+  - Windows 10 or 11 (64-bit)
+  - A graphics card that supports DirectX 12
+  - 4 GB of memory and 150 MB of space
+
+
+--------------------------------------------------------------
+4. THE MVP (THE FIRST COMPLETE VERSION)
+--------------------------------------------------------------
+
+"MVP" means Minimum Viable Product: the smallest version of the
+game that is complete and fun. This is what it has:
+
+  [done] A flame character that moves, jumps and flickers
+  [done] One full level with 4 parts
+  [done] Hidden stones revealed by your light
+  [done] The Time Pulse freezing 4 moving dangers
+         (2 spinning blades, 1 crusher, 1 moving platform)
+  [done] Shadow thorns that hurt
+  [done] 2 fire shrines (checkpoints)
+  [done] A lighthouse ending where the light spreads
+  [done] Main menu, controls screen, pause, victory screen
+  [done] Sounds, music that gets warmer near the end
+  [done] A Windows .exe file
+
+Saved for later:
+  - More levels
+  - Collectibles
+  - A settings menu
+
+
+--------------------------------------------------------------
+5. WHAT THE GAME IS MADE WITH (THE "TECH STACK")
+--------------------------------------------------------------
+
+  Godot 4.7.2 ........ The game engine. Free and open source.
+  GDScript ........... The programming language (like Python).
+  Blender 5.2 ........ 3D modelling. Every model (the flame,
+                       ruins, lighthouse, lamps, blades) was
+                       made by a small Blender script.
+  DirectX 12 ......... The Windows graphics system.
+  Jolt Physics ....... Makes collisions and falling work.
+  Sound .............. Every sound was created by code, from math.
+
+No downloaded art was used in this game - everything was made
+for it.
+
+
+--------------------------------------------------------------
+6. HOW THE FILES ARE ORGANISED (THE "HIERARCHY")
+--------------------------------------------------------------
+
+  main.tscn ........ The front door. The game starts here.
+  project.godot .... Settings and controls.
+
+  scripts\ ......... The BRAINS (all the code).
+      main.gd             runs the game: menu, camera, ending
+      player.gd           the flame: moving, jumping, Time Pulse
+      level.gd            checkpoints, ending light, background
+      freezable.gd        anything the Time Pulse can freeze
+      hidden_platform.gd  stones that appear in your light
+      shrine.gd           the fire shrines (checkpoints)
+      lamp.gd             street lamps that relight at the end
+      lighthouse.gd       the lighthouse and its beams
+      kill_area.gd        anything that hurts you
+      trigger.gd          story messages and the ending trigger
+      layout.gd           the level layout written as numbers
+      ui.gd               menus and on-screen messages
+      sfx.gd              sounds and music
+
+  scenes\ .......... The BUILDING BLOCKS.
+      level.tscn          the whole level
+      player.tscn         the flame
+      props\              shrine, lamp, blade, crusher, moving
+                          platform, thorns, lighthouse, hidden
+                          stone
+
+  ui\ .............. Menus and their look.
+  models\ .......... 3D shapes.
+  materials\ ....... What surfaces look like (stone, metal).
+  audio\ ........... All sound files.
+  tools\ ........... Helper scripts used to BUILD the game.
+  art\ ............. The original Blender file.
+  build\ ........... The finished game (.exe).
+
+
+--------------------------------------------------------------
+7. HOW THE GAME IS PUT TOGETHER (SCENES)
+--------------------------------------------------------------
+
+Godot builds games from "scenes" - groups of parts that can hold
+other scenes inside them, like Lego.
+
+  Main  (runs everything)
+   |
+   +-- World
+   |     +-- Lighting and fog
+   |     +-- The Moon
+   |     +-- Camera (follows the flame from the side)
+   |     +-- Level
+   |     |     +-- Platforms (stone pillars)
+   |     |     +-- Props (hidden stones, shrines, lamps, lighthouse)
+   |     |     +-- Hazards (blades, crusher, moving platform, thorns)
+   |     |     +-- Signs (tutorial words)
+   |     |     +-- Triggers (story text and the ending)
+   |     |     +-- Ruins (background)
+   |     |     +-- Far Layer (distant ruins, far lighthouse, moon)
+   |     +-- Player (the flame)
+   |
+   +-- Sound and music
+   +-- Menus and messages (on top)
+
+The flame is made of:
+  - an invisible ball shape (for touching the ground)
+  - 3 flame shapes that flicker
+  - a soft glow and a real light that lights up the stones
+  - a trail of sparks
+
+
+--------------------------------------------------------------
+8. THE RULES AND NUMBERS
+--------------------------------------------------------------
+
+  Speed ................ 6 metres per second
+  Jump ................. about 2.2 metres high, 4 metres long
+  Time Pulse ........... freezes things within 7 metres
+                         lasts 2.5 s, recharges in 3 s
+  Hidden stones ........ appear when you are within 3.5 metres
+  Falling .............. below the level = back to last shrine
+
+To change a number, open scripts\player.gd and change the value
+at the top.
+
+
+--------------------------------------------------------------
+9. HOW THE MAIN PARTS WORK (SIMPLE VERSION)
+--------------------------------------------------------------
+
+FREEZING (TIME)
+  Every moving danger has its own little clock. Normally the
+  clock ticks and the danger moves. The Time Pulse simply stops
+  that clock for 2.5 seconds. When it starts again, the danger
+  continues from exactly where it stopped.
+
+HIDDEN STONES (SHADOW)
+  A hidden stone is see-through and you fall through it. Every
+  moment it checks: "is the flame close?" If yes, it fades in,
+  becomes solid, and stays.
+
+CHECKPOINTS
+  When you touch a fire shrine it lights up and remembers its
+  place. If you die, you come back there and every danger
+  resets.
+
+THE ENDING (FIRE)
+  When you reach the lighthouse, its lamp lights up and the
+  camera pulls back. Then every street lamp and shrine relights
+  in order, starting near the lighthouse and spreading back
+  across the world. The music turns warm.
+
+
+--------------------------------------------------------------
+10. WHERE EVERYTHING CAME FROM
+--------------------------------------------------------------
+
+  All 3D models ........ made by tools\make_models.py (Blender)
+  Stone look ........... made inside Godot from "noise"
+  Sounds and music ..... made by tools\synth.gd
+  Scenes and menus ..... first made by tools\bake.gd
+
+IMPORTANT: edit the scenes directly in Godot now. Running
+bake.gd again would REPLACE your changes.
+
+
+--------------------------------------------------------------
+11. HOW TO MAKE A NEW .EXE
+--------------------------------------------------------------
+
+  1. Open the project in Godot.
+  2. Click Project -> Export...
+  3. Choose "Windows Desktop" and click "Export Project".
+  4. Save it as build\TheLastEmber.exe
+
+Before sharing a new version: play the whole level once, test
+dying and coming back, click every menu button, and open the new
+.exe once.
+
+
+--------------------------------------------------------------
+12. TESTING
+--------------------------------------------------------------
+
+The game has a hidden test mode that takes a picture and closes:
+
+  TheLastEmber.exe -- --shot=picture.png --at=66 --pulse
+
+  --at=66   start the flame 66 metres into the level
+  --pulse   use the Time Pulse
+  --end     play the ending
+
+What was tested: every part of the level, the Time Pulse, the
+ending and the .exe. What still needs real players: whether the
+jumps feel fair and fun.
+
+
+--------------------------------------------------------------
+13. KNOWN PROBLEMS
+--------------------------------------------------------------
+
+  - One level only.
+  - Needs DirectX 12.
+  - Windows shows a warning the first time (not signed).
+  - First start is slow; later starts are fast.
+
+
+--------------------------------------------------------------
+14. WHAT COMES NEXT (ROADMAP)
+--------------------------------------------------------------
+
+  Next:  playtest and tune the jumps.
+  Later: more levels, collectibles, settings menu.
+
+This game later grew into "Last Light", a 1v1 fighting game that
+uses the same ruins, lighthouse and Fire / Shadow / Time ideas.
+
+
+--------------------------------------------------------------
+15. GOOD HABITS FOR ANY SOFTWARE PROJECT
+--------------------------------------------------------------
+
+  SAVE HISTORY (Git/GitHub) - keeps every version so you can
+    go back if something breaks.
+  VERSION NUMBERS - 0.1.0: fix -> 0.1.1, feature -> 0.2.0,
+    big release -> 1.0.0.
+  CHANGELOG - a list of what changed in each version.
+  BACKUPS - 3 copies, 2 devices, 1 somewhere else.
+  BUG REPORTS - what you did, what you expected, what happened,
+    version, screenshot.
+  PLAYTESTING - watch people play without helping them.
+  LICENCES - only use things you are allowed to use.
+  SPEED - aim for 60 FPS on the slowest PC you want to support.
+
+
+--------------------------------------------------------------
+16. CREDITS AND LICENCES
+--------------------------------------------------------------
+
+  Godot Engine ...... MIT licence (free to use)
+  Everything else ... made for this project
+
+
+--------------------------------------------------------------
+17. WORD LIST
+--------------------------------------------------------------
+
+  Engine ........... the program that runs the game (Godot)
+  2.5D ............. a 3D world played like a 2D side-scroller
+  Scene ............ a group of parts put together
+  Script ........... a file of code
+  MVP .............. the first small but complete version
+  Checkpoint ....... a place you come back to after dying
+  Hazard ........... something that hurts you
+  Time Pulse ....... your power that freezes blue-marked dangers
+  Export ........... turning the project into an .exe
+  Repository/Repo .. a project's online home on GitHub
+  Release .......... a downloadable version on GitHub

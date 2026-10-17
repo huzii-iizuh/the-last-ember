@@ -1,0 +1,8 @@
+# Godot's import cache: rebuilt automatically when the project is opened
+.godot/
+
+# Game builds: too big for git (GitHub's 100 MB limit). They are attached to GitHub Releases.
+build/
+
+# Blender autosave backups
+*.blend1
